@@ -1,10 +1,13 @@
-import React from "react"
+import React, {ReactNode} from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 
+type SquareValues = "X" | "O" | null
+
+// SQUARE COMPONENT ==============================================
 interface SquareProps {
     onClick(): void
-    value: "X" | "O" | null
+    value: SquareValues
 }
 
 const Square: React.FC<SquareProps> = props => {
@@ -15,20 +18,20 @@ const Square: React.FC<SquareProps> = props => {
     );
 }
   
+
+// BOARD COMPONENT ==============================================
 interface BoardProps {
     onClick(i: number): void  
-    squares: ""
+    squares: SquareValues[]
 }
 
 const Board: React.FC<BoardProps> = props => {
-    const renderSquare = i => {
-      return (
+    const renderSquare = (i: number): ReactNode => (
         <Square
           value={props.squares[i]}
           onClick={() => props.onClick(i)}
         />
-      );
-    }
+    )
   
     return (
         <div>
@@ -51,7 +54,8 @@ const Board: React.FC<BoardProps> = props => {
     )
      
 }
-  
+
+// GAME COMPONENT ==============================================
 class Game extends React.Component {
     constructor(props) {
       super(props);
