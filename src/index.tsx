@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react"
+import React, {ReactNode, useState} from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 
@@ -10,13 +10,11 @@ interface SquareProps {
     value: SquareValues
 }
 
-const Square: React.FC<SquareProps> = props => {
-    return (
-      <button className="square" onClick={props.onClick}>
+const Square: React.FC<SquareProps> = props => (
+    <button className="square" onClick={props.onClick}>
         {props.value}
-      </button>
-    );
-}
+    </button>
+)
   
 
 // BOARD COMPONENT ==============================================
@@ -56,19 +54,15 @@ const Board: React.FC<BoardProps> = props => {
 }
 
 // GAME COMPONENT ==============================================
-class Game extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        history: [
-          {
+const Game: React.FC = () => {
+
+    const [xIsNext, setXIsNext] = useState<boolean>(true)
+    const [stepNumber, setStepNumber] = useState<number>(0)
+    const [history, setHistory] = useState<{squares: SquareValues[]}[]>([
+        {
             squares: Array(9).fill(null)
-          }
-        ],
-        stepNumber: 0,
-        xIsNext: true
-      };
-    }
+        }
+    ])
   
     handleClick(i) {
       const history = this.state.history.slice(0, this.state.stepNumber + 1);
@@ -134,6 +128,7 @@ class Game extends React.Component {
         </div>
       );
     }
+
 }
   
   // ========================================
